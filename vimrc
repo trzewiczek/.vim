@@ -11,6 +11,7 @@ Plugin 'gmarik/Vundle.vim'
 Plugin 'mattn/emmet-vim'
 Plugin 'tomtom/tcomment_vim'
 Plugin 'altercation/vim-colors-solarized'
+Plugin 'godlygeek/tabular'
 
 call vundle#end()
 filetype plugin indent on
@@ -36,8 +37,6 @@ set encoding=utf-8
 set tabstop=4
 set softtabstop=4
 set expandtab
-
-filetype indent on
 
 
 " ui options
@@ -91,3 +90,27 @@ nnoremap B ^
 " autocommands
 au FocusLost * :wa                    " save buffer when loosing focus
 au BufWritePre * :%s/\s\+$//e         " remove trailing whitespaces
+
+
+" tabularize extras
+if exists(":Tabularize")
+  nmap <Leader>1 :Tabularize /=<CR>
+  vmap <Leader>1 :Tabularize /=<CR>
+  nmap <Leader>2 :Tabularize /:<CR>
+  vmap <Leader>2 :Tabularize /:<CR>
+  nmap <Leader>3 :Tabularize /import<CR>
+  vmap <Leader>3 :Tabularize /import<CR>
+endif
+
+inoremap <silent> <Bar>   <Bar><Esc>:call <SID>align()<CR>a
+
+function! s:align()
+  let p = '^\s*|\s.*\s|\s*$'
+  if exists(':Tabularize') && getline('.') =~# '^\s*|' && (getline(line('.')-1) =~# p || getline(line('.')+1) =~# p)
+    let column = strlen(substitute(getline('.')[0:col('.')],'[^|]','','g'))
+    let position = strlen(matchstr(getline('.')[0:col('.')],'.*|\s*\zs.*'))
+    Tabularize/|/l1
+    normal! 0
+    call search(repeat('[^|]*|',column).'\s\{-\}'.repeat('.',position),'ce',line('.'))
+  endif
+endfunction
