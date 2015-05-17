@@ -14,6 +14,7 @@ Plugin 'altercation/vim-colors-solarized'
 Plugin 'godlygeek/tabular'
 
 call vundle#end()
+filetype plugin on
 filetype plugin indent on
 
 
@@ -34,9 +35,15 @@ set guifont=Cousine\ 10
 set encoding=utf-8
 
 " tabs and spaces
-set tabstop=4
-set softtabstop=4
+set tabstop=2
+set softtabstop=2
+set shiftwidth=2
 set expandtab
+
+autocmd Filetype python setlocal ts=4 sw=4 sts=4 et
+
+set autoindent
+set smartindent
 
 
 " ui options
@@ -59,6 +66,7 @@ let mapleader = ","
 
 inoremap jj <esc>
 nnoremap ; :
+vnoremap ; :
 
 nnoremap <leader>s :mksession<CR>   " save session
 
