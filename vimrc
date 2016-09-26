@@ -13,6 +13,10 @@ Plugin 'tomtom/tcomment_vim'
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'godlygeek/tabular'
 
+" ChucK
+Plugin 'Shougo/vimproc.vim'
+Plugin 'wilsaj/chuck.vim'
+
 call vundle#end()
 filetype plugin on
 filetype plugin indent on
